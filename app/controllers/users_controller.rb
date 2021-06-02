@@ -24,6 +24,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def followings
+    user = User.find(params[:id])
+    @users = user.followings
+  end
+
+  def followers
+    user = User.find(params[:id])
+    @users = user.followers
+  end
+
   private
 
   def user_params
@@ -36,4 +46,5 @@ class UsersController < ApplicationController
       redirect_to user_path(current_user)
     end
   end
+
 end
