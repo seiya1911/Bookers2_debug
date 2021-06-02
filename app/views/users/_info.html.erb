@@ -7,9 +7,17 @@
   <tr>
 	  <th>introduction</th>
 	  <th><%= user.introduction %></th>
+	</tr>
+	<tr>
+	  <th>フォロー数: </th>
+	  <th><%= user.followings.count %></th>
+	</tr>
+	<tr>
+    <th>フォロワー数: </th>
+    <th><%= user.followers.count %></th>
   </tr>
 </table>
-
+<%= render 'relationships/follow_button', user: user %>
 <div class='row'>
   <%= link_to '',edit_user_path(user),class: "btn btn-outline-secondary btn-block fas fa-user-cog edit_user_#{user.id}" %>
 </div>
