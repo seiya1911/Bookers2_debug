@@ -15,7 +15,6 @@
     </tr>
   <% end %>
 </table>
-<%= form_with model:[@book,@book_comment], local: true do |f| %>
-  <%= f.text_area :comment, size:"90x5" %><br>
-  <%= f.submit '送信'%>
+<% if user_signed_in? %>
+ <%= render 'comment_form', book: @book, book_comment: @book_comment %>
 <% end %>
