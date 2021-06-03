@@ -1,5 +1,5 @@
-<table>
-  <% @book.book_comments.each do |book_comment| %>
+<table id="comments_area">
+  <% book.book_comments.each do |book_comment| %>
     <% book_comment_user = book_comment.user %>
     <tr>
     	<td>
@@ -10,11 +10,8 @@
     	</td>
     	<td><%= book_comment.comment %></td>
     	<% if current_user == book_comment_user %>
-      	<td><%= link_to 'Destroy', book_book_comment_path(book_comment.book_id, book_comment.id), class: 'btn-sm btn-danger', method: :delete %></td>
+      	<td><%= link_to 'Destroy', book_book_comment_path(book_comment.book_id, book_comment.id), remote: true, class: 'btn-sm btn-danger', method: :delete %></td>
     	<% end %>
     </tr>
   <% end %>
 </table>
-<% if user_signed_in? %>
- <%= render 'comment_form', book: @book, book_comment: @book_comment %>
-<% end %>
