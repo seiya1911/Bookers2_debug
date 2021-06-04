@@ -25,4 +25,6 @@ class Book < ApplicationRecord
     end
   end
 
+  is_impressionable counter_cache: true
+
 end
