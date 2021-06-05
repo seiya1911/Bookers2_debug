@@ -27,6 +27,11 @@ class UsersController < ApplicationController
     @book = Book.new
     @books_today = @user.books.where(created_at: Time.zone.now.all_day)
     @books_yesterday = @user.books.where(created_at: 1.day.ago.all_day)
+    @books_2daysago = @user.books.where(created_at: 2.day.ago.all_day)
+    @books_3daysago = @user.books.where(created_at: 3.day.ago.all_day)
+    @books_4daysago = @user.books.where(created_at: 4.day.ago.all_day)
+    @books_5daysago = @user.books.where(created_at: 5.day.ago.all_day)
+    @books_6daysago = @user.books.where(created_at: 6.day.ago.all_day)
     to = Time.current.at_end_of_day
     from = (to - 6.day).at_beginning_of_day
     @books_thisweek = @user.books.where(created_at: from...to)
