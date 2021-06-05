@@ -23,32 +23,44 @@
    </tr>
   </tbody>
 </table>
-<h6>7日間の投稿数の比較</h6>
-<canvas id="myChart"></canvas>
-<script>
-var ctx = document.getElementById("myChart");
-var myChart = new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: ["6日前", "5日前", "4日前", "3日前", "2日前", "1日前", "今日"],
-    datasets:
-    [
-        {
-        label: '投稿した本の数',
-        backgroundColor: '#1239bf',
-        borderColor: '#1239bf',
-        data: [<%= @books_6daysago.count %>, <%= @books_5daysago.count %>, <%= @books_4daysago.count %>, <%= @books_3daysago.count %>, <%= @books_2daysago.count %>, <%= @books_yesterday.count %> ,<%= @books_today.count %>]
-        },
 
-    ]
-  },
-  options: {
-      scale: {
-          ticks: {
-              suggestedMin: 0,
-              suggestedMax: 10
-          }
-      }
-  }
-});
+
+<canvas id="myLineChart"></canvas>
+  <script>
+    $(document).on('turbolinks:load', function() {
+      var ctx = document.getElementById("myLineChart");
+      var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
+          datasets: [
+            {
+              label: '投稿した本の数',
+        data: [<%= @books_6daysago.count %>, <%= @books_5daysago.count %>, <%= @books_4daysago.count %>, <%= @books_3daysago.count %>, <%= @books_2daysago.count %>, <%= @books_yesterday.count %> ,<%= @books_today.count %>],
+              borderColor: "rgba(0,0,255,1)",
+              backgroundColor: "rgba(0,0,0,0)"
+            }
+          ],
+        },
+        options: {
+          title: {
+            display: true,
+            text: '7日間の投稿数の比較'
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                suggestedMax: 10,
+                suggestedMin: 0,
+                stepSize: 1,
+                callback: function(value, index, values){
+                  return  value
+                }
+              }
+            }]
+          },
+        }
+      });
+    });
+
 </script>
