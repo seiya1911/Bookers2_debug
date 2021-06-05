@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   root :to => "homes#top"
   get "home/about" => "homes#about"
 
+  get 'chat/:id' => 'chats#new', as: 'chat'
+
   resources :books, only: [:index, :show, :edit, :create, :destroy, :update] do
     resource :favorites, only: [:create, :destroy]
     resources :book_comments, only: [:create, :destroy]
@@ -16,5 +18,9 @@ Rails.application.routes.draw do
     end
     resource :relationships, only: [:create, :destroy]
   end
+
+  resources :chats, only: [:create]
+
+  resources :rooms, only: [:create, :show]
 
 end
