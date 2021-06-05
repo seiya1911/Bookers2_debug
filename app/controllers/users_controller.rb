@@ -30,6 +30,7 @@ class UsersController < ApplicationController
     to  = Time.current.at_end_of_day
     from  = (to - 6.day).at_beginning_of_day
     @booksThisweek = @user.books.where(created_at: from...to)
+    @booksLastweek = @user.books.where(created_at: (from - 6.day)...(to - 6.day))
   end
 
   def index
