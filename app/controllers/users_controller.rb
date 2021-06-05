@@ -25,8 +25,11 @@ class UsersController < ApplicationController
     # ここまで
     @books = @user.books
     @book = Book.new
-    @booksToday = @user.books.where("DATE(created_at) = '#{Date.today}'")
-    # @booksTesterday = @user.books.where("DATE(created_at) = '#{Date.yesterday}'")
+    @booksToday = @user.books.where("created_at >= ?", Date.today)
+    # @booksTesterday = @user.books.where("created_at >= ?", Date.yesterday)
+    to  = Time.current.at_end_of_day
+    from  = (to - 6.day).at_beginning_of_day
+    @booksThisweek = @user.books.where(created_at: from...to)
   end
 
   def index
