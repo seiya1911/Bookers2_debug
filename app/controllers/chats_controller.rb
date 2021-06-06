@@ -1,39 +1,37 @@
 class ChatsController < ApplicationController
-  # def show
-  #   @user = User.find(params[:id])
-  #   rooms = current_user.member.pluck(:room_id)
-  #   members = Member.find_by(user_id: @user.id, room_id: rooms)
+  before_action :follow_each_other, only: [:show]
+  def show
+    @user = User.find(params[:id])
+    rooms = current_user.user_rooms.pluck(:room_id)
+    user_rooms = UserRoom.find_by(user_id: @user.id, room_id: rooms)
 
-  #   unless member.nil?
-  #     @room = members.room
-  #   else
-  #     @room = Room.new
-  #     @room.save
-  #     Member.create(user_id: current_user.id, room_id: @room.id)
-  #     Member.create(user_id: @user.id, room_id: @room.id)
-  #   end
-  #   @chats = @room.chats
-  #   @chat = Chat.new(room_id: @room.id)
-  # end
-
-  # def create
-  #   @chat = current_user.chats.new(chat_params)
-  #   @chat.save
-  #   redirect_to request.referer
-  # end
-
-  # private
-  # def chat_params
-  #   params.require(:chat).permit(:message, :room_id)
-  # end
-  before_action :authenticate_user!, only: [:create]
-
-  def create
-    if Member.where(user_id: current_user.id, room_id: params[:chat][:room_id]).present?
-      @chat = chat.create(params.require(:chat).permit(:user_id, :message, :room_id).merge(user_id: current_user.id))
+    unless user_rooms.nil?
+      @room = user_rooms.room
     else
-      flash[:alert] = "メッセージ送信に失敗しました。"
+      @room = Room.new
+      @room.save
+      UserRoom.create(user_id: current_user.id, room_id: @room.id)
+      UserRoom.create(user_id: @user.id, room_id: @room.id)
     end
-　　redirect_to "/rooms/#{@chat.room_id}"
+    @chats = @room.chats
+    @chat = Chat.new(room_id: @room.id)
+  end
+  def create
+    @chat = current_user.chats.new(chat_params)
+    @chat.save
+  end
+
+  private
+  def chat_params
+    params.require(:chat).permit(:message, :room_id)
+  end
+
+  def follow_each_other
+    user = User.find(params[:id])
+    unless current_user.following?(user) && user.following?(current_user)
+      redirect_to books_path
+    end
   end
 end
+
+
