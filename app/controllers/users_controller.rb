@@ -19,6 +19,20 @@ class UsersController < ApplicationController
     @books_lastweek = @user.books.where(created_at: (from - 6.day)...(to - 6.day))
   end
 
+  def search
+    @user = User.find(params[:user_id])
+    @books = @user.books
+    @book = Book.new
+    if params[:created_at] == ""
+      @search_book = "日付を選択してください"
+      render 'search'
+    else
+      create_at = params[:created_at]
+      @search_book = @books.where(['created_at LIKE ? ', "#{create_at}%"]).count
+      render 'search'
+    end
+  end
+
   def index
     @users = User.all
     @book = Book.new

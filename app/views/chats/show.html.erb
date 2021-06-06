@@ -1,11 +1,15 @@
-<h1 id="room" data-room="<%= @room.id %>" data-user="<%= current_user.id %>"><%= @user.name %> さんとのチャット</h1>
+<h1 id="room" data-room="<%= @room.id %>" data-user="<%= current_user.id %>">
+  <%= attachment_image_tag(@user, :profile_image, size: "100x100", fallback: "no_image.jpg") %>
+  <%= @user.name %> さんとのチャット
+</h1>
 
-<div class="message" style="width: 400px;">
-  <% @chats.each do |chat| %>
-    <% if chat.user_id == current_user.id %>
-      <p style="text-align: right;"><%= chat.message %></p>
+ <div class="message" style="width: 400px;">
+  <% @chats.each do |m| %>
+    <% if m.user_id == current_user.id %>
+      <p style="text-align: right;" ><%= m.message %></p>
     <% else %>
-      <p style="text-align: left;"><%= chat.message %></p>
+      <div><%= attachment_image_tag(m.user, :profile_image, size: "30x30", fallback: "no_image.jpg") %></div>
+      <p style="text-align: left;"><%= m.message %></p>
     <% end %>
   <% end %>
 </div>
@@ -14,3 +18,4 @@
   <%= f.text_field :message %>
   <%= f.hidden_field :room_id %>
 <% end %>
+</div>
