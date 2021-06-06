@@ -19,8 +19,6 @@ Rails.application.routes.draw do
     resource :relationships, only: [:create, :destroy]
   end
 
-  resources :chats, only: [:create]
-
-  resources :rooms, only: [:create, :show]
+  resources :chats, only: [:show, :create]
 
 end

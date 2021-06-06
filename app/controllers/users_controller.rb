@@ -4,25 +4,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    # 追加してみた
-    @currentUserMember = Member.where(user_id: current_user.id)
-    @userMember = Member.where(user_id: @user.id)
-    unless @user.id == current_user.id
-      @currentUserMember.each do |cu|
-        @userMember.each do |u|
-          if cu.room_id == u.room_id then
-            @isRoom = true
-            @roomId = cu.room_id
-          end
-        end
-      end
-      if @isRoom
-      else
-        @room = Room.new
-        @member = Member.new
-      end
-    end
-    # ここまで
     @books = @user.books
     @book = Book.new
     @books_today = @user.books.where(created_at: Time.zone.now.all_day)
