@@ -21,6 +21,10 @@ Rails.application.routes.draw do
 
   resources :chats, only: [:show, :create]
 
-  resources :groups
+  resources :groups do
+    member do
+      get :join
+    end
+  end
 
 end
