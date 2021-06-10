@@ -7,4 +7,9 @@ class SearchsController < ApplicationController
       @books = Book.looks(params[:search], params[:word])
     end
   end
+
+  def books_search
+    @books = Book.looks(params[:search], params[:category])
+    @book = Book.new
+  end
 end
