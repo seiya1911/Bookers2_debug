@@ -1,6 +1,8 @@
-class BookComment < ApplicationRecord
-	belongs_to :user
-	belongs_to :book
+# frozen_string_literal: true
 
-	validates :comment, presence: true
+class BookComment < ApplicationRecord
+  belongs_to :user
+  belongs_to :book
+
+  validates :comment, presence: true
 end

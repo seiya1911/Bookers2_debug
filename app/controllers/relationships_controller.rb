@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RelationshipsController < ApplicationController
   def create
     current_user.follow(params[:user_id])
@@ -18,5 +20,4 @@ class RelationshipsController < ApplicationController
     user = User.find(params[:userid])
     @users = user.followers
   end
-
 end
