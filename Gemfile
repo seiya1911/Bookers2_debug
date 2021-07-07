@@ -73,3 +73,8 @@ gem 'font-awesome-sass', '~> 5.13'
 gem 'jquery-rails'
 
 gem 'impressionist', '~>1.6.1'
+
+gem 'dotenv-rails'
+group :production do
+  gem 'mysql2'
+end
